@@ -14,6 +14,6 @@ module.exports = (sequelize, Sequelize) => {
       }
 
     });
-    Book.sync();
+     Book.sync();
     return Book;
   };

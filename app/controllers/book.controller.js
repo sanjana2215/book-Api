@@ -2,23 +2,16 @@ const db = require("../models");
 const Book = db.books;
 const Op = db.Sequelize.Op;
 
-exports.create = (req, res) =>{
-    if(!req.body.title)
-    {
-        res.status(400).send({
-            message:"Title cannot be empty!"
-        });
-        return;
-    }
-    // Create a Book
-  const book = {
+//const check = v.compile(schema);
+
+exports.create = (req, res) =>{ 
+    const book = {
     title: req.body.title,
     description: req.body.description,
     author: req.body.author,
     price: req.body.price
   };
 
-  // Save Book in the database
  Book.create(book)
     .then(data => {
       res.send(data);
@@ -41,17 +34,18 @@ exports.findAll = (req, res) => {
       res.send(data);
     })
     .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving books."
-      });
+      //console.log(err)
+      res.send(err)
+      // res.status(500).send({
+      //   message:
+      //     err.message || "Some error occurred while retrieving books."
+      // });
     });
 };
 
 // Find a single book with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-
   Book.findByPk(id)
     .then(data => {
       if (data) {

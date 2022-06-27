@@ -1,9 +1,21 @@
+
 module.exports = app => {
     const books = require("../controllers/book.controller.js");
-  
+    const { validator } = require('express-fastest-validator');
+
+
+const schema = {
+   body:{ 
+    title: { type: "string", min: 3, max: 255 },
+    description: { type: "string", min: 3, max: 255 },
+    author: { type: "string", min: 3, max: 255 },
+    price: { type: "number", positive: true, integer: true }
+  }
+};
+
     var router = require("express").Router();
   
-    router.post("/", books.create);                        //create
+    router.post("/", validator(schema),books.create);                        //create
   
     router.get("/", books.findAll);                        //find all  
   
